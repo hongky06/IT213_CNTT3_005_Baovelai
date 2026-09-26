@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/parking_reservation}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}

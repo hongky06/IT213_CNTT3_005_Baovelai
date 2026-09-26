@@ -1,0 +1,50 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  application:
+    name: parking-reservation-assistant
+  ai:
+    openai:
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      api-key: ${OPENAI_API_KEY:}
+      chat:
+        options:
+          model: ${OPENAI_CHAT_MODEL:gpt-4o-mini}
+      embedding:
+        options:
+          model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+    vectorstore:
+      pgvector:
+        enabled: ${PGVECTOR_ENABLED:true}
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: ${EMBEDDING_DIMENSIONS:1536}
+        initialize-schema: true
+        table-name: ${PGVECTOR_TABLE_NAME:vector_store}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/parking_reservation}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+
+app:
+  rag:
+    similarity-threshold: ${RAG_SIMILARITY_THRESHOLD:0.70}
+  langfuse:
+    enabled: ${LANGFUSE_ENABLED:false}
+    otlp-endpoint: ${LANGFUSE_OTLP_ENDPOINT:${LANGFUSE_BASE_URL:http://localhost:3000}/api/public/otel/v1/traces}
+    public-key: ${LANGFUSE_PUBLIC_KEY:}
+    secret-key: ${LANGFUSE_SECRET_KEY:}
+  mcp:
+    antigravity:
+      enabled: ${MCP_ANTIGRAVITY_ENABLED:false}
+      endpoint: ${MCP_ANTIGRAVITY_ENDPOINT:}
+      token: ${MCP_ANTIGRAVITY_TOKEN:}
